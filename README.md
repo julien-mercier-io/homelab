@@ -5,7 +5,7 @@ Ce homelab se veut être un terrain d'expérimentations avec pour contrainte d'�
 
 # Mon matériel
 
-## Le cluster k3s
+## Le cluster k8s
 
 Composé de :
  - HP EliteDesk G4 800 : Core i7 8700, 16Go, 512Go nvme
