@@ -23,7 +23,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
-            echo "<h1>Hello from $(hostname) with env $(ENVIRONMENT)</h1>" > /usr/share/nginx/html/index.html
+            echo "Hello from $(hostname) with env $(ENVIRONMENT)" > /usr/share/nginx/html/index.html
             nginx -g 'daemon off;'
         env:
         - name: ENVIRONMENT
@@ -36,7 +36,7 @@ spec:
           periodSeconds: 5
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 10
@@ -47,16 +47,3 @@ spec:
           limits:
             cpu: 200m
             memory: 128Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-app
-  namespace: demo
-spec:
-  selector:
-    app: nginx
-  ports:
-  - port: 80
-    targetPort: 80
-  type: NodePort
