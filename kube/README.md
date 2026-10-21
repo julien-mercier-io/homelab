@@ -33,3 +33,34 @@ $ k get nodes
 NAME        STATUS   ROLES           AGE   VERSION
 master-01   Ready    control-plane   86m   v1.36.5+k3s1
 ```
+
+On valide le fonctionnement
+
+```
+# Création d'un namespace demo et d'un serveur nginx
+$ k create ns demo
+$ k run nginx --image nginx -n demo
+$ k get pods -n demo
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          15s
+
+# On port-forward sur le port 8080
+$ k port-forward pods/nginx 8080:80 -n demo
+
+# Depuis un second shell
+$ curl -I localhost:8080
+HTTP/1.1 200 OK
+Server: nginx/1.31.7
+Date: Wed, 21 Oct 2026 09:18:04 GMT
+Content-Type: text/html
+Content-Length: 896
+Last-Modified: Thu, 01 Oct 2026 17:19:27 GMT
+Connection: keep-alive
+ETag: "6abe961f-380"
+Accept-Ranges: bytes
+
+# On détruit le ns et ce qu'il y a dedans
+$ k delete ns demo
+namespace "demo" deleted
+$ k get pods -n demo -o wide
+No resources found in demo namespace.
