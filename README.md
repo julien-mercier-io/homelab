@@ -5,12 +5,12 @@ Ce homelab se veut être un terrain d'expérimentations avec pour contrainte d'�
 
 # Mon matériel
 
-## Le cluster k8s
+## Le cluster K8s
 
 Composé de :
- - HP EliteDesk G4 800 : Core i7 8700, 16Go, 512Go nvme
- - Dell OptiPlex 3070 : Core i5 9500T, 8Go, 256Go nvme
- - Dell OptiPlex 3040 : Core i5 6500T, 8Go, 256Go SSD
+ - HP EliteDesk G4 800 : Core i7 8700, 16Go, 512Go nvme // master-01
+ - Dell OptiPlex 3070 : Core i5 9500T, 8Go, 256Go nvme // node-01
+ - Dell OptiPlex 3040 : Core i5 6500T, 8Go, 256Go SSD // node-02
 
 ## Le réseau
 
