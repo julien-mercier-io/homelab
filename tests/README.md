@@ -1,0 +1,1 @@
+Tests des ressources k8s de base, bonnes pratiques, sécurité
