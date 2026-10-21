@@ -10,23 +10,31 @@ Donc parfait pour expérimenter.
 Je génère au préalable de l'installation le fichier de config qui sera lu par le batch d'install
 ```
 $ sudo mkdir -p /etc/rancher/k3s
+# l'ingress traefik et le loadbalancer servicelb seront installés plus tard, manuellement
 $ sudo vi /etc/rancher/k3s/config.yaml
-write-kubeconfig-mode: "0644" # on rend le fichier kubeconfig lisible sans droit sudo
 disable:
-  - traefik # désactivation de traefik pour pouvoir tester l'installation via Helm plus tard
-  - servicelb # désactivation du load balancer car aucun besoin dans l'immédiat
+  - traefik
+  - servicelb
 ```
 L'installation se fait ensuite facilement et très rapidement via :
 ``curl -sfL https://get.k3s.io | sh -``
 ```
-$ kubectl get nodes
+$ sudo kubectl get nodes
 NAME        STATUS   ROLES           AGE   VERSION
 master-01   Ready    control-plane   6s    v1.36.5+k3s1
 ```
-Je crée l'alias k pour kubectl et ajoute l'autocomplétion :
+Je copie le kubeconfig sur mon profil afin qu'il soit lisible sans utiliser sudo
+```
+mkdir -p ~/.kube
+sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+sudo chown $(id -u):$(id -g) ~/.kube/config
+```
+Je crée l'alias k pour kubectl, exporte l'emplacement du kubeconfig et ajoute l'autocomplétion :
 
 ```
-$ echo 'alias k=kubectl' > ~/.bashrc
+$ echo 'alias k=kubectl' >> ~/.bashrc
+$ echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
+$ echo 'source <(kubectl completion bash)' >> ~/.bashrc
 $ echo 'complete -o default -F __start_kubectl k' >> ~/.bashrc
 $ source ~/.bashrc
 $ k get nodes
